@@ -4,12 +4,12 @@ import io
 import os
 from PIL import Image
 
-MOUNT_DIR = '/sample/data/'
+dataDir = os.getcwd() + "/data/"
 
-records_filename = MOUNT_DIR + 'tune_resnet50_1_3_224_224.json'
-model_filename = MOUNT_DIR + 'resnet50-v1-7.onnx'
-labels_filename = MOUNT_DIR + 'synset.txt'
-test_filename = MOUNT_DIR + 'kitten.jpg'
+records_filename = dataDir  + 'tune_resnet50_1_3_224_224.json'
+model_filename   = dataDir  + 'resnet50-v1-7.onnx'
+labels_filename  = dataDir  + 'synset.txt'
+test_filename    = dataDir  + 'kitten.jpg'
 
 
 def load_file(img):
@@ -70,7 +70,7 @@ def run_inference():
     )
     package = tvmc.compile(
         model,
-        target="llvm",
+        target="llvm -mcpu=skylake",
         tuning_records=records_filename,
         package_path="tvm_package"
     )
